@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kay Coin Blockchain</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="/materialize.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Blockchain Section -->
+        <section id="blockchain">
+            <h2>Blockchain</h2>
+            <pre class="pre"><%= JSON.stringify(blockchain, null, 2) %></pre>
+        </section>
+
+        <!-- Transaction Section -->
+        <section>
+            <h2>Create a Transaction</h2>
+            <form action="/transaction/broadcast" method="POST" class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <input type="text" id="sender" name="sender" required>
+                        <label for="sender">Sender</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" id="recipient" name="recipient" required>
+                        <label for="recipient">Recipient</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="number" id="amount" name="amount" required>
+                        <label for="amount">Amount</label>
+                    </div>
+                    <button type="submit" class="btn waves-effect waves-light"
+                        style="background-color: rgb(7, 40, 87 );">Submit Transaction</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <div style="background-color: rgb(82, 116, 154);" align="center">
+        <p class="white-text">&copy; 2025 Evian Blockchain. All rights reserved.</p>
+    </div>
+    <script src="/jQuery.js"></script>
+    <script src="/materialize.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidenav = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(sidenav);
+        });
+    </script>
+    <!-- Materialize JS -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+</body>
+
+</html>

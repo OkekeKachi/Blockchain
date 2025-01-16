@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node Management</title>
+    <link rel="stylesheet" href="/materialize.css">
+    <link rel="stylesheet" href="/styles.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        h1 {
+            font-size: 2.5rem;
+            color: #004d40;
+        }
+
+        .btn {
+            background-color: teal !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Node Management</h1>
+            <div class="row">
+                <!-- Register and Broadcast -->
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Register and Broadcast Node</span>
+                            <form action="/register-and-broadcast" method="POST">
+                                <div class="input-field">
+                                    <input type="text" id="broadcastNodeUrl" name="newNodeUrl" required>
+                                    <label for="broadcastNodeUrl">Node URL</label>
+                                </div>
+                                <button type="submit" class="btn">Register and Broadcast</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Node -->
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Register Node</span>
+                            <form action="/register-node" method="POST">
+                                <div class="input-field">
+                                    <input type="text" id="singleNodeUrl" name="newNodeUrl" placeholder="http://localhost:3000" required>
+                                    <input type="text" value="broadcast" name="broadcast" hidden>
+                                    
+                                </div>
+                                <button type="submit" class="btn">Register Node</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Bulk Nodes -->
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Register Bulk Nodes</span>
+                            <form action="/register-nodes-bulk" method="POST">
+                                <div class="input-field">
+                                    <textarea id="bulkNodeUrls" placeholder="http://localhost:3000, http://localhost:3001,..." name="allNetworkNodes" class="materialize-textarea"
+                                        required></textarea>
+                                    <input type="text" value="broadcast" name="broadcast" hidden>
+                                    
+                                </div>
+                                <button type="submit" class="btn">Register Bulk Nodes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div style="background-color: rgb(82, 116, 154);" align="center">
+        <p class="white-text">&copy; 2025 Evian Blockchain. All rights reserved.</p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

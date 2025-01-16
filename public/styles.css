@@ -1,0 +1,89 @@
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            /* background: linear-gradient(135deg, rgba(5, 112, 21, 0.7), rgba(5, 99, 74, 0.7)); */
+            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        .hero-section {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url("https://builtin.com/sites/www.builtin.com/files/inline-images/inside-crypto-cryptocurrency.png");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .hero-section .btn {
+            background-color: teal;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .features .card {
+            border-radius: 10px;
+        }
+
+        .footer {
+            background-color: rgb(7, 40, 87);
+            color: white;
+            padding: 10px 0;
+        }
+
+        .blockchain {
+            margin: 20px;
+        }
+
+        .pre {
+            background-color: white;
+            padding: 10px;
+            border-radius: 9px;
+            overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+
+        .form-container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border-radius: 10px;
+        }
+
+        h4,
+        h3 {
+            color: black;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+
+        }
+
+        .btn {
+            background-color: teal;
+        }
+
+        .back {
+            margin: 10px auto;
+            color: white;
+            background-color: teal;
+            padding: 10px 15px;
+            text-align: center;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
