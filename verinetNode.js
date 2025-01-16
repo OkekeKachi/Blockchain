@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const uuid = require('uuid')
 const Blockchain = require('./blockchain');
-const evian = new Blockchain();
+const OkekeKachiFelixVugSen228300 = new Blockchain();
 const nodeAddress = uuid.v1().split("-").join("")
 const port = process.argv[2] || 3000
 console.log(a=process.argv)
@@ -21,14 +21,14 @@ app.get("/", function (req, res) {
     res.render('index');       
 });
 app.get("/blockchain", function (req, res) {
-    res.render("blockchain", { blockchain: evian })
+    res.render("blockchain", { blockchain: OkekeKachiFelixVugSen228300 })
 })
 
 app.post('/transaction/broadcast', (req, res) => {
-    const newTransaction = evian.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
-    evian.addTransactionToPendingTransactions(newTransaction);
+    const newTransaction = OkekeKachiFelixVugSen228300.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient);
+    OkekeKachiFelixVugSen228300.addTransactionToPendingTransactions(newTransaction);
     const requestPromises = []
-    evian.networkNodes.forEach(networkNodeUrl => {
+    OkekeKachiFelixVugSen228300.networkNodes.forEach(networkNodeUrl => {
         const requestOptions = {
             url: `${networkNodeUrl}/transaction/broadcast`,
             method: 'POST',
@@ -48,14 +48,14 @@ app.post('/transaction/broadcast', (req, res) => {
 app.post('/transaction', function (req, res) {
     const newTransaction = req.body;
     
-    const blockIndex = evian.addTransactionToPendingTransactions(newTransaction)
-    // const blockIndex = JSON.stringify(evian.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient))
+    const blockIndex = OkekeKachiFelixVugSen228300.addTransactionToPendingTransactions(newTransaction)
+    // const blockIndex = JSON.stringify(OkekeKachiFelixVugSen228300.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient))
     //   res.json({note:`Transaction will be added in block ${blockIndex}`})
     res.redirect("/blockchain")
 });
 
 app.get('/seemine', (req, res) => {
-    const minedBlocks = evian.chain.filter(block => block.hash && block.hash.startsWith('0000'));
+    const minedBlocks = OkekeKachiFelixVugSen228300.chain.filter(block => block.hash && block.hash.startsWith('0000'));
     const lastBlock = minedBlocks.length>0 ?minedBlocks[minedBlocks.length-1]:null
     
     if (
@@ -68,18 +68,18 @@ app.get('/seemine', (req, res) => {
 })
 
 app.get('/mine', function (req, res) {
-    const lastBlock = evian.getLastBlock();
+    const lastBlock = OkekeKachiFelixVugSen228300.getLastBlock();
     const previousBlockHash = lastBlock['hash'];
     const currentBlockData = {
         //remove s
-        transactions: evian.pendingTransactions,
+        transactions: OkekeKachiFelixVugSen228300.pendingTransactions,
         index: lastBlock['index'] + 1
     };
-    const nonce = evian.proofOfWork(previousBlockHash, currentBlockData);
-    const blockHash = evian.hashBlock(previousBlockHash, currentBlockData, nonce);
-    const newBlock = evian.createNewBlock(nonce, previousBlockHash, blockHash);
+    const nonce = OkekeKachiFelixVugSen228300.proofOfWork(previousBlockHash, currentBlockData);
+    const blockHash = OkekeKachiFelixVugSen228300.hashBlock(previousBlockHash, currentBlockData, nonce);
+    const newBlock = OkekeKachiFelixVugSen228300.createNewBlock(nonce, previousBlockHash, blockHash);
 
-    const requestPromises = evian.networkNodes.map(networkNodeUrl => {
+    const requestPromises = OkekeKachiFelixVugSen228300.networkNodes.map(networkNodeUrl => {
         const requestOptions = {
             url: `${networkNodeUrl}/receive-new-block`,
             method: 'POST',
@@ -100,13 +100,13 @@ app.get('/mine', function (req, res) {
 
 app.post('/receive-new-block', (req, res) => {
     const newBlock = req.body.newBlock;
-    const lastBlock = evian.getLastBlock();
+    const lastBlock = OkekeKachiFelixVugSen228300.getLastBlock();
     const correctHash = lastBlock.hash === newBlock.previousBlockHash;
     const correctIndex = lastBlock['index'] + 1 === newBlock.index;
 
     if (correctHash && correctIndex) {
-        evian.chain.push(newBlock);
-        evian.pendingTransactions = [];
+        OkekeKachiFelixVugSen228300.chain.push(newBlock);
+        OkekeKachiFelixVugSen228300.pendingTransactions = [];
         res.status(200).json({
             note: "New block received and accepted.",
             newBlock: newBlock
@@ -128,11 +128,11 @@ app.get('/register', (req, res) => {
 // // register a node and broadcast it to the network
 // app.post('/register-and-broadcast',function(req,res){
 //     const newNodeUrl =req.body.newNodeUrl;
-//     if(evian.networkNodes.indexOf(newNodeUrl)==-1){
-//         evian.networkNodes.push(newNodeUrl)
+//     if(OkekeKachiFelixVugSen228300.networkNodes.indexOf(newNodeUrl)==-1){
+//         OkekeKachiFelixVugSen228300.networkNodes.push(newNodeUrl)
 //     }
 //     const regNodesPromises = [];
-//     evian.networkNodes.forEach(networkNodeUrl =>{
+//     OkekeKachiFelixVugSen228300.networkNodes.forEach(networkNodeUrl =>{
 //         const requestOptions = {
 //             url: networkNodeUrl + '/register-node',
 //             method: 'POST',
@@ -145,7 +145,7 @@ app.get('/register', (req, res) => {
 //         const bulkRegisterOptions = {
 //             url: newNodeUrl + '/register-nodes-bulk',
 //             method: 'POST',
-//             body: {allNetworkNodes: [evian.networkNodes, evian.currentNodeUrl]},
+//             body: {allNetworkNodes: [OkekeKachiFelixVugSen228300.networkNodes, OkekeKachiFelixVugSen228300.currentNodeUrl]},
 //             json: true
 //         };
 //         return rp(bulkRegisterOptions);
@@ -162,12 +162,12 @@ app.post('/register-and-broadcast', function (req, res) {
     const newNodeUrl = req.body.newNodeUrl;
 
     // Check if the node is already in the list of registered nodes
-    if (evian.networkNodes.indexOf(newNodeUrl) === -1) {
-        evian.networkNodes.push(newNodeUrl);  // Add the new node to the list
+    if (OkekeKachiFelixVugSen228300.networkNodes.indexOf(newNodeUrl) === -1) {
+        OkekeKachiFelixVugSen228300.networkNodes.push(newNodeUrl);  // Add the new node to the list
     }
 
     // Prepare the request promises to register this node with other nodes in the network
-    const regNodesPromises = evian.networkNodes.map(networkNodeUrl => {
+    const regNodesPromises = OkekeKachiFelixVugSen228300.networkNodes.map(networkNodeUrl => {
         const requestOptions = {
             url: `${networkNodeUrl}/register-node`,
             method: 'POST',
@@ -176,7 +176,7 @@ app.post('/register-and-broadcast', function (req, res) {
         };
         return rp(requestOptions);
     });
-    console.log(evian.networkNodes)
+    console.log(OkekeKachiFelixVugSen228300.networkNodes)
     console.log(newNodeUrl);
     
     // Execute all promises
@@ -188,10 +188,10 @@ app.post('/register-and-broadcast', function (req, res) {
             const bulkRegisterOptions = {
                 url: `${newNodeUrl}/register-nodes-bulk`,
                 method: 'POST',                
-                body: { allNetworkNodes: [...evian.networkNodes, evian.currentNodeUrl] },
+                body: { allNetworkNodes: [...OkekeKachiFelixVugSen228300.networkNodes, OkekeKachiFelixVugSen228300.currentNodeUrl] },
                 json: true
             };
-            console.log(evian.currentNodeUrl);
+            console.log(OkekeKachiFelixVugSen228300.currentNodeUrl);
             
             return rp(bulkRegisterOptions);   
             
@@ -215,10 +215,10 @@ app.post('/register-node', function(req,res){
     const broadcast = req.body.broadcast;
 
     
-    const nodeNotAlreadyPresent = evian.networkNodes.indexOf(newNodeUrl) == -1
-    const notCurrentNode = evian.currentNodeUrl !== newNodeUrl;
+    const nodeNotAlreadyPresent = OkekeKachiFelixVugSen228300.networkNodes.indexOf(newNodeUrl) == -1
+    const notCurrentNode = OkekeKachiFelixVugSen228300.currentNodeUrl !== newNodeUrl;
     if(nodeNotAlreadyPresent && notCurrentNode){
-        evian.networkNodes.push(newNodeUrl);
+        OkekeKachiFelixVugSen228300.networkNodes.push(newNodeUrl);
     };
     // res.json({note:'New node registered successfully'})
     if (broadcast) {
@@ -242,9 +242,9 @@ app.post('/register-nodes-bulk', function (req, res) {
         }
     }   
     allNetworkNodes.forEach(networkNodeUrl=>{
-        const nodeNotAlreadyPresent= evian.networkNodes.indexOf(networkNodeUrl)==-1;
-        const notCurrentNode = evian.currentNodeUrl !== networkNodeUrl;
-        if(nodeNotAlreadyPresent && notCurrentNode) evian.networkNodes.push(networkNodeUrl);
+        const nodeNotAlreadyPresent= OkekeKachiFelixVugSen228300.networkNodes.indexOf(networkNodeUrl)==-1;
+        const notCurrentNode = OkekeKachiFelixVugSen228300.currentNodeUrl !== networkNodeUrl;
+        if(nodeNotAlreadyPresent && notCurrentNode) OkekeKachiFelixVugSen228300.networkNodes.push(networkNodeUrl);
         console.log("registering");
         
     });
