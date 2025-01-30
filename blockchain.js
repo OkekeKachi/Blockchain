@@ -5,7 +5,7 @@ class Blockchain {
 	constructor() {
 		this.chain = [];
 		// this.pendingTransaction = [];
-		this.currentNodeUrl = process.argv[2];
+		this.currentNodeUrl ="https://localhost:" + process.argv[2];
 		// give the genesis block a nonce, previous hash and hash of 
 		//zeros to begin with
 		this.createNewBlock(100, 0, 0);

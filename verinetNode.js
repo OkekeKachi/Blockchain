@@ -30,10 +30,11 @@ app.post('/transaction/broadcast', (req, res) => {
     const requestPromises = []
     OkekeKachiFelixVugSen228300.networkNodes.forEach(networkNodeUrl => {
         const requestOptions = {
-            url: `${networkNodeUrl}/transaction/broadcast`,
+            url: `${networkNodeUrl}/transaction`,
             method: 'POST',
             body: newTransaction,
-            json: true
+            json: true,
+            followAllRedirects: true
         };
         requestPromises.push(rp(requestOptions));        
     })    
@@ -46,7 +47,9 @@ app.post('/transaction/broadcast', (req, res) => {
 
 // POST /transaction
 app.post('/transaction', function (req, res) {
+      
     const newTransaction = req.body;
+    console.log(newTransaction);
     
     const blockIndex = OkekeKachiFelixVugSen228300.addTransactionToPendingTransactions(newTransaction)
     // const blockIndex = JSON.stringify(OkekeKachiFelixVugSen228300.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient))
